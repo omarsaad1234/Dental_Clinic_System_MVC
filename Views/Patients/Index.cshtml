@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Dental_Clinic.Models.Patient>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-cust">Create New  <i class="bi bi-person-plus"></i></a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mobile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayName("Chief Complain")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Procedure)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChiefComplain)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Procedure)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square" style="font-size:x-large"></i></a> |
+                <a asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-arrows-angle-expand" style="font-size:x-large"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash" style="font-size:x-large"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,88 @@
+﻿@model Dental_Clinic.Models.Patient
+
+@{
+    ViewData["Title"] = "Details";
+    List<Appointment> appointments = ViewBag.Appointments;
+    Invoice invoice = ViewBag.Invoice;
+    MedicalHistory medHistory = ViewBag.MedHistory;
+    DentalHistory denHistory = ViewBag.DenHistory;
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Patient</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Mobile)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Mobile)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayName("Chief Complain")
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ChiefComplain)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Procedure)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Procedure)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Create" asp-route-id="@Model?.Id" asp-controller="Appointments">Add Appointment</a> |
+    @if (appointments.Count != 0){
+        <a asp-action="AppointmentsOfPatient" asp-controller="Appointments" asp-route-id="@Model?.Id">Show Appointments |</a>
+    }
+    
+</div>
+
+
+
+
+@if (invoice != null)
+{
+    <div><a asp-action="InvoiceOfPat" asp-controller="Invoices" asp-route-id="@Model?.Id">Show Invoice</a> |</div>
+
+}
+else
+{
+    <div><a asp-action="Create" asp-controller="Invoices" asp-route-id="@Model?.Id">Add Invoice</a> |</div>
+}
+@if (medHistory != null)
+{
+    <div><a asp-action="MedHistOfPat" asp-controller="MedicalHistories" asp-route-id="@Model?.Id">Show Medical History</a> |</div>
+}
+else
+{
+    <div><a asp-action="Create" asp-controller="MedicalHistories" asp-route-id="@Model?.Id">Add Medical History</a> |</div>
+}
+@if (denHistory != null)
+{
+    <div><a asp-action="DetailsOfPat" asp-controller="DentalHistories" asp-route-patId="@Model?.Id">Show Dental History</a> |</div>
+}
+else
+{
+    <div><a asp-action="Create" asp-controller="DentalHistories" asp-route-id="@Model?.Id">Add Dental History</a> |</div>
+}
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

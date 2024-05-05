@@ -1,0 +1,54 @@
+﻿@model Dental_Clinic.Models.DentalHistory
+
+@{
+
+}
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Patient)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Patient.Name)
+    </dd>
+</dl>
+
+<table class="table">
+    <thead>
+        <tr>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @for (int i = 7; i >= 0; i--)
+                {
+
+                    <a asp-action="TeethDetailUpLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img src="~/Up_@(i).png" /></a>
+
+                }
+                @for (int i = 0; i < 8; i++)
+                {
+                    <a asp-action="TeethDetailUpRight" asp-route-id="@Model.Id" asp-route-num="@i"><img src="~/Up_@(i).png" /></a>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @for (int i = 7; i >= 0; i--)
+                {
+
+                    <a asp-action="TeethDetailDownLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img src="~/Down_@(i).png" /></a>
+
+                }
+                @for (int i = 0; i < 8; i++)
+                {
+                    <a asp-action="TeethDetailDownRight" asp-route-id="@Model.Id" asp-route-num="@i"><img src="~/Down_@(i).png" /></a>
+                }
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+
+
+<a asp-action="Index">Back To All Dental Histories</a>

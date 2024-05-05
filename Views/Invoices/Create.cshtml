@@ -1,0 +1,52 @@
+﻿@model Dental_Clinic.Dtos.CreateAndEditRequests.InvoiceDtoRequest
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Invoice</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TotalSessions" class="control-label"></label>
+                <input asp-for="TotalSessions" class="form-control" />
+                <span asp-validation-for="TotalSessions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DoneSessions" class="control-label"></label>
+                <input asp-for="DoneSessions" class="form-control" />
+                <span asp-validation-for="DoneSessions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalCost" class="control-label"></label>
+                <input asp-for="TotalCost" class="form-control" />
+                <span asp-validation-for="TotalCost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaidAmount" class="control-label"></label>
+                <input asp-for="PaidAmount" class="form-control" />
+                <span asp-validation-for="PaidAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Patient</label>
+                <select asp-for="PatId" class ="form-control" asp-items="ViewBag.Patients"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-cust" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

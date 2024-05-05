@@ -1,0 +1,85 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+a {
+    text-decoration: none;
+    color: royalblue;
+}
+a:hover{
+    color:midnightblue;
+}
+img:hover {
+    filter: saturate(300%);
+}
+.modified {
+    filter: drop-shadow(3px 3px 6px green) invert(75%);
+}
+.btn-cust {
+    color: #4169e1;
+    background-color: #fff;
+    border-color: lightgray;
+    font-family: cursive;
+}
+.btn-cust:hover {
+    color: white;
+    background-color: royalblue;
+    border-color: white
+}
+
+input[type="date"] {
+    border-radius: 5px;
+    color: royalblue;
+    font-family: cursive;
+}
+::-webkit-calendar-picker-indicator{
+    cursor:pointer;
+}
+
+.input-group-cust {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 30%;
+}
+
+.input-group-cust > .form-control,
+.input-group-cust > .form-select {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+}
+
+.input-group-cust > .form-control:focus,
+.input-group-cust > .form-select:focus {
+    z-index: 3;
+}
+
+.input-group-cust .btn {
+    position: relative;
+    z-index: 2;
+}
+
+.input-group-cust .btn:focus {
+    z-index: 3;
+}

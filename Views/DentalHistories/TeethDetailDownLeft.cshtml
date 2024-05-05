@@ -1,0 +1,16 @@
+﻿@model Dental_Clinic.Models.DentalHistory
+@{
+    var Teeth = ViewBag.Teeth;
+    var index = ViewBag.index;
+}
+
+<dl class="row">
+    <dt class="col-sm-2">
+        Details
+    </dt>
+    <dd class="col-sm-10">
+        @Teeth
+    </dd>
+</dl>
+<a asp-action="Details" asp-route-id="@Model.Id">Back To All</a>|
+<a asp-action="EditDownLeft" asp-route-id="@Model.Id" asp-route-index="@index">Edit</a>

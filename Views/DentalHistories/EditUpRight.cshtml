@@ -1,0 +1,34 @@
+﻿@model Dental_Clinic.Models.DentalHistory
+@{
+    string teeth = ViewBag.teeth;
+    int index = ViewBag.index;
+}
+
+<h1>Create</h1>
+
+<h4>DentalHistory</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditUpRight">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" type="hidden" />
+            <input name="index" id="index" value="@index" type="hidden" />
+            <div class="form-group">
+                <label for="Detail" class="control-label">Detail</label>
+                <input type="text" id="Detail" name="Detail" value="@teeth" class="form-control" />
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-cust" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

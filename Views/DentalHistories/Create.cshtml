@@ -1,0 +1,70 @@
+﻿
+@{
+    int id = ViewBag.Id;
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Up Left
+            </th>
+            <th>
+                Up Right
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @for (int i = 7; i >= 0; i--)
+                {
+
+                    <a asp-action="TeethCreateUpLeft" asp-route-patId="@id" asp-route-num="@i">@(i + 1)</a>
+
+                }
+            </td>
+            <td>
+                @for (int i = 0; i < 8; i++)
+                {
+                    <a asp-action="TeethCreateUpRight" asp-route-patId="@id" asp-route-num="@i">@(i + 1)</a>
+                }
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Down Left
+            </th>
+            <th>
+                Down Right
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @for (int i = 7; i >= 0; i--)
+                {
+
+                    <a asp-action="TeethCreateDownLeft" asp-route-patId="@id" asp-route-num="@i">@(i + 1)</a>
+
+                }
+            </td>
+            <td>
+                @for (int i = 0; i < 8; i++)
+                {
+                    <a asp-action="TeethCreateDownRight" asp-route-patId="@id" asp-route-num="@i">@(i + 1)</a>
+                }
+            </td>
+
+        </tr>
+
+    </tbody>
+</table>
