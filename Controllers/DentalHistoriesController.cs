@@ -87,28 +87,28 @@ namespace Dental_Clinic.Controllers
             ViewBag.Id = id;
             return View();
         }
-        public async Task<IActionResult> TeethCreateUpLeft(int patId,int num)
+        public async Task<IActionResult> TeethCreateUpLeft(int Id,int num)
         {
             ViewBag.index = num;
-            ViewBag.patId = patId;
+            ViewBag.patId = Id;
             return View();
         }
-        public async Task<IActionResult> TeethCreateUpRight(int patId, int num)
+        public async Task<IActionResult> TeethCreateUpRight(int Id, int num)
         {
             ViewBag.index = num;
-            ViewBag.patId = patId;
+            ViewBag.patId = Id;
             return View();
         }
-        public async Task<IActionResult> TeethCreateDownRight(int patId, int num)
+        public async Task<IActionResult> TeethCreateDownRight(int Id, int num)
         {
             ViewBag.index = num;
-            ViewBag.patId = patId;
+            ViewBag.patId = Id;
             return View();
         }
-        public async Task<IActionResult> TeethCreateDownLeft(int patId, int num)
+        public async Task<IActionResult> TeethCreateDownLeft(int Id, int num)
         {
             ViewBag.index = num;
-            ViewBag.patId = patId;
+            ViewBag.patId = Id;
             return View();
         }
         // POST: DentalHistoriesController/Create
@@ -130,7 +130,7 @@ namespace Dental_Clinic.Controllers
             }
             catch
             {
-                return View();
+                return View("TeethCreateUpLeft");
             }
         }
         [HttpPost]
@@ -151,7 +151,7 @@ namespace Dental_Clinic.Controllers
             }
             catch
             {
-                return View();
+                return View("TeethCreateUpRight");
             }
         }
         [HttpPost]
@@ -172,7 +172,7 @@ namespace Dental_Clinic.Controllers
             }
             catch
             {
-                return View();
+                return View("TeethCreateDownLeft");
             }
         }
         [HttpPost]
@@ -193,7 +193,7 @@ namespace Dental_Clinic.Controllers
             }
             catch
             {
-                return View();
+                return View("TeethCreateDownRight");
             }
         }
 

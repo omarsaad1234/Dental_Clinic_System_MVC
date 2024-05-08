@@ -12,6 +12,6 @@
         public DentalHistory? DentalHistory { get; set; }
         public MedicalHistory? MedicalHistory {  get; set; }
         public Invoice? Invoice { get; set; }
-        public List<Appointment> Appointments {  get; set; }
+        public List<Appointment>? Appointments {  get; set; }
     }
 }

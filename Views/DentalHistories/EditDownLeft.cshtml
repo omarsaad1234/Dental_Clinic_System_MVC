@@ -10,20 +10,20 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditDownLeft">
+        <form asp-action="EditDownLeft" id="edit_1">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="Id" type="hidden" />
             <input name="index" id="index" value="@index" type="hidden" />
-            <div class="form-group">
-                <label for="Detail" class="control-label">Detail</label>
-                <input type="text" id="Detail" name="Detail" value="@teeth" class="form-control" />
-                <span class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-cust" />
-            </div>
+            
         </form>
-    </div>
+        <div class="form-group">
+            <label for="Detail" class="control-label">Detail</label>
+            <textarea form="edit_1" id="Detail" name="Detail" class="form-control">@teeth</textarea>
+        </div>
+        <div class="form-group">
+            <input form="edit_1" type="submit" value="Save" class="btn btn-cust" />
+        </div>
+</div>
 </div>
 
 @section Scripts {

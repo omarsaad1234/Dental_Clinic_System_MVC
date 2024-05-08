@@ -10,6 +10,7 @@ using Dental_Clinic.Models;
 using Dental_Clinic.Interfaces;
 using Dental_Clinic.Dtos.CreateAndEditRequests;
 using AutoMapper;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Dental_Clinic.Controllers
 {
@@ -21,12 +22,14 @@ namespace Dental_Clinic.Controllers
         private readonly IMedicalHistoryRepo _medicalHistory;
         private readonly IDentalHistoryRepo _dentalHistoryRepo;
         private readonly IMapper _mapper;
+        private readonly INotyfService _notyfService;
 
         public PatientsController(IPatientRepo patientRepo,IAppointmentRepo appointmentRepo
             ,IInvoiceRepo invoiceRepo
             ,IMedicalHistoryRepo medicalHistory
             ,IDentalHistoryRepo dentalHistoryRepo
-            ,IMapper mapper)
+            ,IMapper mapper
+            ,INotyfService notyfService)
         {
             _patientRepo = patientRepo;
             _appointmentRepo = appointmentRepo;
@@ -34,6 +37,7 @@ namespace Dental_Clinic.Controllers
             _medicalHistory = medicalHistory;
             _dentalHistoryRepo = dentalHistoryRepo;
             _mapper = mapper;
+            _notyfService = notyfService;
         }
 
         // GET: Patients
@@ -123,7 +127,7 @@ namespace Dental_Clinic.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,Patient patient)
+        public IActionResult Edit(int id,Patient patient)
         {
             if (id != patient.Id)
             {

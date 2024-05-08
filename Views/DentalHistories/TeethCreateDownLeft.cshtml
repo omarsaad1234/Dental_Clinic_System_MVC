@@ -9,19 +9,18 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateDownLeft">
+        <form asp-action="CreateDownLeft" id="create_1">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" name="Index" id="Index" value="@index" />
             <input type="hidden" name="PatientId" id="PatientId" value="@PatientId" />
-            <div class="form-group">
-                <label for="Detail" class="control-label">Detail</label>
-                <input type="text" id="Detail" name="Detail" class="form-control" />
-                <span class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-cust" />
-            </div>
         </form>
+        <div class="form-group">
+            <label for="Detail" class="control-label">Detail</label>
+            <textarea form="create_1" id="Detail" name="Detail" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <input form="create_1" type="submit" value="Create" class="btn btn-cust" />
+        </div>
     </div>
 </div>
 

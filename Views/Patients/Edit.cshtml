@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" id = "myForm2">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -28,20 +28,18 @@
                 <input asp-for="Age" class="form-control" />
                 <span asp-validation-for="Age" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ChiefComplain" class="control-label"></label>
-                <input asp-for="ChiefComplain" class="form-control" />
-                <span asp-validation-for="ChiefComplain" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Procedure" class="control-label"></label>
-                <input asp-for="Procedure" class="form-control" />
-                <span asp-validation-for="Procedure" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-cust" />
-            </div>
         </form>
+        <div class="form-group">
+            <label for="ChiefComplain">Chief Complain</label>
+            <textarea form="myForm2" class="form-control" id="ChiefComplain" name="ChiefComplain" >@Model.ChiefComplain</textarea>
+        </div>
+        <div class="form-group">
+            <label for="Procedure">Procedure</label>
+            <textarea form="myForm2" class="form-control" id="Procedure" name="Procedure">@Model.Procedure</textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit" form="myForm2" class="btn btn-cust">Save</button>
+        </div>
     </div>
 </div>
 

@@ -10,6 +10,9 @@ using Dental_Clinic.Models;
 using Dental_Clinic.Interfaces;
 using Dental_Clinic.Dtos.CreateAndEditRequests;
 using AutoMapper;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using Hangfire;
+using AspNetCoreHero.ToastNotification.Notyf;
 
 namespace Dental_Clinic.Controllers
 {
@@ -18,17 +21,28 @@ namespace Dental_Clinic.Controllers
         private readonly IAppointmentRepo _appointmentRepo;
         private readonly IPatientRepo _patientRepo;
         private readonly IMapper _mapper;
+        private readonly INotyfService _notyfService;
 
-        public AppointmentsController(IAppointmentRepo appointmentRepo,IPatientRepo patientRepo,IMapper mapper)
+        public AppointmentsController(IAppointmentRepo appointmentRepo
+            ,IPatientRepo patientRepo
+            ,IMapper mapper
+            , INotyfService notyfService)
         {
             _appointmentRepo = appointmentRepo;
             _patientRepo = patientRepo;
             _mapper = mapper;
+            _notyfService = notyfService;
+        }
+        public void Notify()
+        {
+            
+            _notyfService.Success("asdasd", 5);
         }
 
         // GET: Appointments
         public async Task<IActionResult> Index()
         {
+            Notify();
             return View(await _appointmentRepo.GetAll());
         }
         public async Task<IActionResult> AppointmentsWithDate(DateOnly date)
@@ -81,8 +95,16 @@ namespace Dental_Clinic.Controllers
         {
             if (ModelState.IsValid&&_patientRepo.PatientExists(appointmentCreate.PatId))
             {
+                var patient = await _patientRepo.GetById(appointmentCreate.PatId);
                 var appointmentMap = _mapper.Map<Appointment>(appointmentCreate);
-                _appointmentRepo.Create(appointmentMap);
+                if (!_appointmentRepo.Create(appointmentMap))
+                {
+                    return View();
+                }
+                //BackgroundJob.Schedule(
+                //    () => Notify(),
+                //    TimeSpan.FromMinutes(1)
+                //    );
                 return RedirectToAction(nameof(Index));
             }
             var patients = await _patientRepo.GetAll();

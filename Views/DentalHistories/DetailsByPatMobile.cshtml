@@ -22,13 +22,27 @@
             <td>
                 @for (int i = 7; i >= 0; i--)
                 {
+                    if (Model.Up_Left[i] != null)
+                    {
+                        <a asp-action="TeethDetailUpLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img class="modified" src="~/Up_@(i).png" /></a>
+                    }
+                    else
+                    {
+                        <a asp-action="TeethDetailUpLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img src="~/Up_@(i).png" /></a>
+                    }
 
-                    <a asp-action="TeethDetailUpLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img src="~/Up_@(i).png" /></a>
 
                 }
                 @for (int i = 0; i < 8; i++)
                 {
-                    <a asp-action="TeethDetailUpRight" asp-route-id="@Model.Id" asp-route-num="@i"><img src="~/Up_@(i).png" /></a>
+                    if (Model.Up_Right[i] != null)
+                    {
+                        <a asp-action="TeethDetailUpRight" asp-route-id="@Model.Id" asp-route-num="@i"><img class="modified" src="~/Up_@(i).png" /></a>
+                    }
+                    else
+                    {
+                        <a asp-action="TeethDetailUpRight" asp-route-id="@Model.Id" asp-route-num="@i"><img src="~/Up_@(i).png" /></a>
+                    }
                 }
             </td>
         </tr>
@@ -37,12 +51,26 @@
                 @for (int i = 7; i >= 0; i--)
                 {
 
-                    <a asp-action="TeethDetailDownLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img src="~/Down_@(i).png" /></a>
+                    if (Model.Down_Left[i] != null)
+                    {
+                        <a asp-action="TeethDetailDownLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img class="modified" src="~/Down_@(i).png" /></a>
+                    }
+                    else
+                    {
+                        <a asp-action="TeethDetailDownLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img src="~/Down_@(i).png" /></a>
+                    }
 
                 }
                 @for (int i = 0; i < 8; i++)
                 {
-                    <a asp-action="TeethDetailDownRight" asp-route-id="@Model.Id" asp-route-num="@i"><img src="~/Down_@(i).png" /></a>
+                    if (Model.Down_Right[i] != null)
+                    {
+                        <a asp-action="TeethDetailDownRight" asp-route-id="@Model.Id" asp-route-num="@i"><img class="modified" src="~/Down_@(i).png" /></a>
+                    }
+                    else
+                    {
+                        <a asp-action="TeethDetailDownRight" asp-route-id="@Model.Id" asp-route-num="@i"><img src="~/Down_@(i).png" /></a>
+                    }
                 }
             </td>
         </tr>
