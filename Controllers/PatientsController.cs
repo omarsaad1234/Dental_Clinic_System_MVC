@@ -10,7 +10,7 @@ using Dental_Clinic.Models;
 using Dental_Clinic.Interfaces;
 using Dental_Clinic.Dtos.CreateAndEditRequests;
 using AutoMapper;
-using AspNetCoreHero.ToastNotification.Abstractions;
+using NToastNotify;
 
 namespace Dental_Clinic.Controllers
 {
@@ -22,14 +22,14 @@ namespace Dental_Clinic.Controllers
         private readonly IMedicalHistoryRepo _medicalHistory;
         private readonly IDentalHistoryRepo _dentalHistoryRepo;
         private readonly IMapper _mapper;
-        private readonly INotyfService _notyfService;
+        private readonly IToastNotification _toastNotification;
 
         public PatientsController(IPatientRepo patientRepo,IAppointmentRepo appointmentRepo
             ,IInvoiceRepo invoiceRepo
             ,IMedicalHistoryRepo medicalHistory
             ,IDentalHistoryRepo dentalHistoryRepo
             ,IMapper mapper
-            ,INotyfService notyfService)
+            ,IToastNotification toastNotification)
         {
             _patientRepo = patientRepo;
             _appointmentRepo = appointmentRepo;
@@ -37,7 +37,7 @@ namespace Dental_Clinic.Controllers
             _medicalHistory = medicalHistory;
             _dentalHistoryRepo = dentalHistoryRepo;
             _mapper = mapper;
-            _notyfService = notyfService;
+            _toastNotification = toastNotification;
         }
 
         // GET: Patients
@@ -102,8 +102,10 @@ namespace Dental_Clinic.Controllers
             var patient = _mapper.Map<Patient>(patientCreate);
             if (ModelState.IsValid&& _patientRepo.Create(patient))
             {
+                _toastNotification.AddSuccessToastMessage("Created Successfully");
                 return RedirectToAction(nameof(Index));
             }
+            _toastNotification.AddErrorToastMessage("Something Went Wrong");
             return View(patient);
         }
 
@@ -141,15 +143,24 @@ namespace Dental_Clinic.Controllers
                     if (!_patientRepo.Update(patient))
                     {
                         ModelState.AddModelError("", "Something Went Wrong");
+                        _toastNotification.AddErrorToastMessage("Something Went Wrong");
+
                         return View(patient);
                     }
+                    _toastNotification.AddSuccessToastMessage("Created Successfully");
+
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (Exception)
                 {
+                    _toastNotification.AddErrorToastMessage("Something Went Wrong");
+
                     return View(patient);
                 }
-                return RedirectToAction(nameof(Index));
+                
             }
+            _toastNotification.AddErrorToastMessage("Something Went Wrong");
+
             return View(patient);
         }
 
@@ -179,8 +190,12 @@ namespace Dental_Clinic.Controllers
             var patient = await _patientRepo.GetById(id);
             if (!_patientRepo.Delete(patient))
             {
+                _toastNotification.AddErrorToastMessage("Something Went Wrong");
+
                 return View(patient);
+
             }
+            _toastNotification.AddSuccessToastMessage("Created Successfully");
             return RedirectToAction(nameof(Index));
         }
 

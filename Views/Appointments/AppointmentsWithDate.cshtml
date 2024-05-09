@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<Dental_Clinic.Models.Appointment>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Appointments";
+    DateOnly date = ViewBag.date;
 }
 
-<h1>Appointment</h1>
+<h1>Appointments In @date</h1>
 
 <table class="table">
     <thead>

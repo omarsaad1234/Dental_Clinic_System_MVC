@@ -11,6 +11,7 @@ using Dental_Clinic.Interfaces;
 using AutoMapper;
 using Dental_Clinic.Dtos.CreateAndEditRequests;
 using Dental_Clinic.Repositories;
+using NToastNotify;
 
 namespace Dental_Clinic.Controllers
 {
@@ -19,13 +20,17 @@ namespace Dental_Clinic.Controllers
         private readonly IMedicalHistoryRepo _medicalHistoryRepo;
         private readonly IPatientRepo _patientRepo;
         private readonly IMapper _mapper;
+        private readonly IToastNotification _toastNotification;
 
-        public MedicalHistoriesController(IMedicalHistoryRepo medicalHistoryRepo,
-            IPatientRepo patientRepo,IMapper mapper)
+        public MedicalHistoriesController(IMedicalHistoryRepo medicalHistoryRepo
+            ,IPatientRepo patientRepo
+            ,IMapper mapper
+            ,IToastNotification toastNotification)
         {
            _medicalHistoryRepo = medicalHistoryRepo;
             _patientRepo = patientRepo;
             _mapper = mapper;
+            _toastNotification = toastNotification;
         }
 
         // GET: MedicalHistories
@@ -84,11 +89,17 @@ namespace Dental_Clinic.Controllers
             {
                 var medicalHistoryMap = _mapper.Map<MedicalHistory>(medicalHistoryCreate);
                 if (!_medicalHistoryRepo.Create(medicalHistoryMap))
+                {
+                    _toastNotification.AddErrorToastMessage("Something Went Wrong");
                     return View(medicalHistoryCreate);
+                }
+                    
+                _toastNotification.AddSuccessToastMessage("Created Successfully");
                 return RedirectToAction(nameof(Index));
             }
             SelectList patients = new SelectList(await _patientRepo.GetAll(), "Id", "Name");
             ViewBag.Patients = patients;
+            _toastNotification.AddErrorToastMessage("Something Went Wrong");
             return View(medicalHistoryCreate);
         }
 
@@ -129,16 +140,24 @@ namespace Dental_Clinic.Controllers
                 {
                     var medicalHistoryMap = _mapper.Map<MedicalHistory>(medicalHistoryEdit);
                     if (!_medicalHistoryRepo.Update(medicalHistoryMap))
+                    {
+                        _toastNotification.AddErrorToastMessage("Something Went Wrong");
                         return View(medicalHistoryEdit);
+                    }
+                        
+                    _toastNotification.AddSuccessToastMessage("Created Successfully");
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (Exception)
                 {
+                    _toastNotification.AddErrorToastMessage("Something Went Wrong");
                     return View(medicalHistoryEdit);
                 }
-                return RedirectToAction(nameof(Index));
+                
             }
             SelectList patients = new SelectList(await _patientRepo.GetAll(), "Id", "Name", id);
             ViewBag.Patients = patients;
+            _toastNotification.AddErrorToastMessage("Something Went Wrong");
             return View(medicalHistoryEdit);
         }
 
@@ -170,6 +189,7 @@ namespace Dental_Clinic.Controllers
             if (medicalHistory != null)
                 _medicalHistoryRepo.Delete(medicalHistory);
 
+            _toastNotification.AddSuccessToastMessage("Created Successfully");
             return RedirectToAction(nameof(Index));
         }
 

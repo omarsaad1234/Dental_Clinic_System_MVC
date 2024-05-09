@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Hangfire;
 using AspNetCoreHero.ToastNotification;
 using System.Configuration;
-using AspNetCoreHero.ToastNotification.Abstractions;
-using AspNetCoreHero.ToastNotification.Notyf;
+using NToastNotify;
 
 namespace Dental_Clinic
 {
@@ -16,12 +15,6 @@ namespace Dental_Clinic
         {
             var builder = WebApplication.CreateBuilder(args);
             var ConnStr = builder.Configuration.GetConnectionString("Default");
-            builder.Services.AddNotyf(config =>
-            {
-                config.DurationInSeconds = 5;
-                config.IsDismissable = true;
-                config.Position = NotyfPosition.BottomRight;
-            });
             builder.Services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
                 .UseSimpleAssemblyNameTypeSerializer()
@@ -29,7 +22,6 @@ namespace Dental_Clinic
                 .UseSqlServerStorage(ConnStr));
             builder.Services.AddHangfireServer();
             builder.Services.AddDbContext<AppDbContext>(o=>o.UseSqlServer(ConnStr));
-            builder.Services.AddScoped<INotyfService, NotyfService>();
             builder.Services.AddScoped<IPatientRepo, PatientRepo>();
             builder.Services.AddScoped<IAppointmentRepo, AppointmentRepo>();
             builder.Services.AddScoped<IInvoiceRepo, InvoiceRepo>();
@@ -38,7 +30,14 @@ namespace Dental_Clinic
             builder.Services.AddAutoMapper(typeof(Program));
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews().AddNToastNotifyToastr(new ToastrOptions
+                {
+                    ProgressBar = true,
+                    PositionClass = ToastPositions.BottomRight,
+                    TimeOut=10000,
+                    CloseButton=true
+                }
+            );
 
             var app = builder.Build();
 
@@ -56,6 +55,7 @@ namespace Dental_Clinic
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseNToastNotify();
             app.UseHangfireDashboard("/Dashboard");
             app.MapControllerRoute(
                 name: "default",

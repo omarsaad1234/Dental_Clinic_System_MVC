@@ -10,6 +10,7 @@ using Dental_Clinic.Models;
 using Dental_Clinic.Interfaces;
 using Dental_Clinic.Dtos.CreateAndEditRequests;
 using AutoMapper;
+using NToastNotify;
 
 namespace Dental_Clinic.Controllers
 {
@@ -18,12 +19,17 @@ namespace Dental_Clinic.Controllers
         private readonly IInvoiceRepo _invoiceRepo;
         private readonly IPatientRepo _patientRepo;
         private readonly IMapper _mapper;
+        private readonly IToastNotification _toastNotification;
 
-        public InvoicesController(IInvoiceRepo invoiceRepo,IPatientRepo patientRepo,IMapper mapper)
+        public InvoicesController(IInvoiceRepo invoiceRepo
+            ,IPatientRepo patientRepo
+            ,IMapper mapper
+            ,IToastNotification toastNotification)
         {
             _invoiceRepo = invoiceRepo;
             _patientRepo = patientRepo;
             _mapper = mapper;
+            _toastNotification = toastNotification;
         }
 
         // GET: Invoices
@@ -81,11 +87,16 @@ namespace Dental_Clinic.Controllers
             {
                 var invoiceMap = _mapper.Map<Invoice>(invoiceCreate);
                 if (!_invoiceRepo.Create(invoiceMap))
+                {
+                    _toastNotification.AddErrorToastMessage("Something Went Wrong");  
                     return View();
+                }
+                _toastNotification.AddSuccessToastMessage("Created Successfully");
                 return RedirectToAction(nameof(Index));
             }
             SelectList patients = new SelectList(await _patientRepo.GetAll(), "Id", "Name");
             ViewBag.Patients = patients;
+            _toastNotification.AddErrorToastMessage("Something Went Wrong");
             return View(invoiceCreate);
         }
 
@@ -119,16 +130,23 @@ namespace Dental_Clinic.Controllers
                 {
                     var invoiceMap = _mapper.Map<Invoice>(invoiceEdit);
                     if (!_invoiceRepo.Update(invoiceMap))
+                    {
+                        _toastNotification.AddErrorToastMessage("Something Went Wrong");
                         return View(invoiceEdit);
+                    }
+                    _toastNotification.AddSuccessToastMessage("Edited Successfully");
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (Exception)
                 {
+                    _toastNotification.AddErrorToastMessage("Something Went Wrong");
                     return View(invoiceEdit);
                 }
-                return RedirectToAction(nameof(Index));
+                
             }
             SelectList patients = new SelectList(await _patientRepo.GetAll(), "Id", "Name", invoiceEdit.PatId);
             ViewBag.Patients = patients;
+            _toastNotification.AddErrorToastMessage("Something Went Wrong");
             return View(invoiceEdit);
         }
 
@@ -158,8 +176,13 @@ namespace Dental_Clinic.Controllers
             if (invoice != null)
             {
                 if (!_invoiceRepo.Delete(invoice))
+                {
+                    _toastNotification.AddErrorToastMessage("Something Went Wrong");
                     return View(invoice);
+                }
+                   
             }
+            _toastNotification.AddSuccessToastMessage("Deleted Successfully");
             return RedirectToAction(nameof(Index));
         }
     }

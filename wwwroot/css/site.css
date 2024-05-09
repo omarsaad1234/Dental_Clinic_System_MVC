@@ -83,3 +83,44 @@ input[type="date"] {
 .input-group-cust .btn:focus {
     z-index: 3;
 }
+.text-cust {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    transition: color 0.20s ease-in-out, background-color 0.20s ease-in-out, border-color 0.15s ease-in-out;
+    color: black;
+    font-size: medium;
+    margin-bottom: -1px;
+    background: none;
+    border: 1px solid transparent;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    border-radius: 0.25rem;
+/*    width: 100%;
+    font-weight:bold;*/
+}
+@media (prefers-reduced-motion: reduce) {
+    .text-cust {
+        transition: none;
+    }
+}
+.text-cust.disabled {
+    color: #6c757d;
+    pointer-events: none;
+    cursor: default;
+}
+.nav-fill > text-cust {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.nav-justified > text-cust{
+    flex-basis: 0;
+    flex-grow: 1;
+    text-align: center;
+}
+.text-cust:hover{
+    color:royalblue;
+    border-color:cornflowerblue;
+    
+}

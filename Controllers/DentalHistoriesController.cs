@@ -4,6 +4,7 @@ using Dental_Clinic.Interfaces;
 using Dental_Clinic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 
 namespace Dental_Clinic.Controllers
 {
@@ -12,14 +13,17 @@ namespace Dental_Clinic.Controllers
         private readonly IDentalHistoryRepo _dentalHistoryRepo;
         private readonly IPatientRepo _patientRepo;
         private readonly IMapper _mapper;
+        private readonly IToastNotification _toastNotification;
 
         public DentalHistoriesController(IDentalHistoryRepo dentalHistoryRepo
             ,IPatientRepo patientRepo
-            ,IMapper mapper)
+            ,IMapper mapper
+            ,IToastNotification toastNotification)
         {
             _dentalHistoryRepo = dentalHistoryRepo;
             _patientRepo = patientRepo;
             _mapper = mapper;
+            _toastNotification = toastNotification;
         }
         // GET: DentalHistoriesController
         public async Task<IActionResult> Index()
@@ -126,10 +130,12 @@ namespace Dental_Clinic.Controllers
                     Up_Left = test,
                 };
                 _dentalHistoryRepo.Create(den);
+                _toastNotification.AddSuccessToastMessage("Created Successfully");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                _toastNotification.AddErrorToastMessage("Something Went Wrong");
                 return View("TeethCreateUpLeft");
             }
         }
@@ -147,10 +153,12 @@ namespace Dental_Clinic.Controllers
                     Up_Right = test,
                 };
                 _dentalHistoryRepo.Create(den);
+                _toastNotification.AddSuccessToastMessage("Created Successfully");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                _toastNotification.AddErrorToastMessage("Something Went Wrong");
                 return View("TeethCreateUpRight");
             }
         }
@@ -168,10 +176,12 @@ namespace Dental_Clinic.Controllers
                     Down_Left = test,
                 };
                 _dentalHistoryRepo.Create(den);
+                _toastNotification.AddSuccessToastMessage("Created Successfully");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                _toastNotification.AddErrorToastMessage("Something Went Wrong");
                 return View("TeethCreateDownLeft");
             }
         }
@@ -189,10 +199,12 @@ namespace Dental_Clinic.Controllers
                     Down_Right = test,
                 };
                 _dentalHistoryRepo.Create(den);
+                _toastNotification.AddSuccessToastMessage("Created Successfully");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                _toastNotification.AddErrorToastMessage("Something Went Wrong");
                 return View("TeethCreateDownRight");
             }
         }
@@ -247,11 +259,17 @@ namespace Dental_Clinic.Controllers
                 var EditedTeeth = await _dentalHistoryRepo.GetById(id);
                 EditedTeeth.Up_Left[Convert.ToInt32(collection["index"])] = collection["Detail"];
                 if (!_dentalHistoryRepo.Update(EditedTeeth))
+                {
+                    _toastNotification.AddErrorToastMessage("Something Went Wrong");
                     return View();
+                }
+                    
+                _toastNotification.AddSuccessToastMessage("Edited Successfully");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                _toastNotification.AddErrorToastMessage("Something Went Wrong");
                 return View();
             }
         }
@@ -266,11 +284,17 @@ namespace Dental_Clinic.Controllers
                 var EditedTeeth = await _dentalHistoryRepo.GetById(id);
                 EditedTeeth.Down_Left[Convert.ToInt32(collection["index"])] = collection["Detail"];
                 if (!_dentalHistoryRepo.Update(EditedTeeth))
+                {
+                    _toastNotification.AddErrorToastMessage("Something Went Wrong");
                     return View();
+                }
+                   
+                _toastNotification.AddSuccessToastMessage("Edited Successfully");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                _toastNotification.AddErrorToastMessage("Something Went Wrong");
                 return View();
             }
         }
@@ -285,11 +309,17 @@ namespace Dental_Clinic.Controllers
                 var EditedTeeth = await _dentalHistoryRepo.GetById(id);
                 EditedTeeth.Up_Right[Convert.ToInt32(collection["index"])] = collection["Detail"];
                 if (!_dentalHistoryRepo.Update(EditedTeeth))
+                {
+                    _toastNotification.AddErrorToastMessage("Something Went Wrong");
                     return View();
+                }
+                    
+                _toastNotification.AddSuccessToastMessage("Edited Successfully");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                _toastNotification.AddErrorToastMessage("Something Went Wrong");
                 return View();
             }
         }
@@ -304,11 +334,17 @@ namespace Dental_Clinic.Controllers
                 var EditedTeeth = await _dentalHistoryRepo.GetById(id);
                 EditedTeeth.Down_Right[Convert.ToInt32(collection["index"])] = collection["Detail"];
                 if (!_dentalHistoryRepo.Update(EditedTeeth))
+                {
+                    _toastNotification.AddErrorToastMessage("Something Went Wrong");
                     return View();
+                }
+                    
+                _toastNotification.AddSuccessToastMessage("Edited Successfully");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                _toastNotification.AddErrorToastMessage("Something Went Wrong");
                 return View();
             }
         }
@@ -335,11 +371,17 @@ namespace Dental_Clinic.Controllers
             {
                 var dentalhistory = await _dentalHistoryRepo.GetById(id);
                 if (!_dentalHistoryRepo.Delete(dentalhistory))
+                {
+                    _toastNotification.AddErrorToastMessage("Something Went Wrong");
                     return View();
+                }
+                    
+                _toastNotification.AddSuccessToastMessage("Deleted Successfully");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                _toastNotification.AddErrorToastMessage("Something Went Wrong");
                 return View();
             }
         }

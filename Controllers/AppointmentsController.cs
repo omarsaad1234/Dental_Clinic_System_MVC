@@ -10,9 +10,9 @@ using Dental_Clinic.Models;
 using Dental_Clinic.Interfaces;
 using Dental_Clinic.Dtos.CreateAndEditRequests;
 using AutoMapper;
-using AspNetCoreHero.ToastNotification.Abstractions;
 using Hangfire;
-using AspNetCoreHero.ToastNotification.Notyf;
+using NToastNotify;
+using Microsoft.Ajax.Utilities;
 
 namespace Dental_Clinic.Controllers
 {
@@ -21,32 +21,27 @@ namespace Dental_Clinic.Controllers
         private readonly IAppointmentRepo _appointmentRepo;
         private readonly IPatientRepo _patientRepo;
         private readonly IMapper _mapper;
-        private readonly INotyfService _notyfService;
+        private readonly IToastNotification _toastNotification;
 
         public AppointmentsController(IAppointmentRepo appointmentRepo
             ,IPatientRepo patientRepo
             ,IMapper mapper
-            , INotyfService notyfService)
+            , IToastNotification toastNotification)
         {
             _appointmentRepo = appointmentRepo;
             _patientRepo = patientRepo;
             _mapper = mapper;
-            _notyfService = notyfService;
-        }
-        public void Notify()
-        {
-            
-            _notyfService.Success("asdasd", 5);
+            _toastNotification = toastNotification;
         }
 
         // GET: Appointments
         public async Task<IActionResult> Index()
         {
-            Notify();
             return View(await _appointmentRepo.GetAll());
         }
         public async Task<IActionResult> AppointmentsWithDate(DateOnly date)
         {
+            ViewBag.date = date;
             return View(await _appointmentRepo.GetByDate(date));
         }
 
@@ -99,17 +94,16 @@ namespace Dental_Clinic.Controllers
                 var appointmentMap = _mapper.Map<Appointment>(appointmentCreate);
                 if (!_appointmentRepo.Create(appointmentMap))
                 {
+                    _toastNotification.AddErrorToastMessage("Something Went Wrong While Saving");
                     return View();
                 }
-                //BackgroundJob.Schedule(
-                //    () => Notify(),
-                //    TimeSpan.FromMinutes(1)
-                //    );
+                _toastNotification.AddSuccessToastMessage("Added Successfully");
                 return RedirectToAction(nameof(Index));
             }
             var patients = await _patientRepo.GetAll();
             SelectList patientsList = new SelectList(patients, "Id", "Name", appointmentCreate.PatId);
             ViewBag.Patients = patientsList;
+            _toastNotification.AddErrorToastMessage("Something Went Wrong");
             return View(appointmentCreate);
         }
 
@@ -154,17 +148,24 @@ namespace Dental_Clinic.Controllers
                 {
                     var appointmentMap = _mapper.Map<Appointment>(appointmentUpdate);
                     if (!_appointmentRepo.Update(appointmentMap))
+                    {
+                        _toastNotification.AddErrorToastMessage("Something Went Wrong");
                         return View(appointmentUpdate);
+                    }
+                        
                 }
                 catch (Exception)
                 {
+                    _toastNotification.AddErrorToastMessage("Something Went Wrong");
                     return View(appointmentUpdate);
                 }
+                _toastNotification.AddSuccessToastMessage("Edited Successfully");
                 return RedirectToAction(nameof(Index));
             }
             var patients = await _patientRepo.GetAll();
             SelectList patientsList = new SelectList(patients, "Id", "Name");
             ViewBag.Patients = patientsList;
+            _toastNotification.AddErrorToastMessage("Something Went Wrong");
             return View(appointmentUpdate);
         }
 
@@ -193,6 +194,7 @@ namespace Dental_Clinic.Controllers
             {
                 _appointmentRepo.Delete(appointment);
             }
+            _toastNotification.AddSuccessToastMessage("Deleted Successfully");
             return RedirectToAction(nameof(Index));
         }
     }
