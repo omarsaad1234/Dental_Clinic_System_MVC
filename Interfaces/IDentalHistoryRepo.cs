@@ -6,6 +6,7 @@ namespace Dental_Clinic.Interfaces
     {
         public Task<ICollection<DentalHistory>> GetAll();
         public Task<DentalHistory> GetById(int id);
+        public DentalHistory GetLast();
         public Task<DentalHistory> GetByPatMobile(string mobile);
         public Task<DentalHistory> GetByPatId(int patId);
         public bool Create(DentalHistory denHistory);

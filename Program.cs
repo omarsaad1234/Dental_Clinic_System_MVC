@@ -2,9 +2,6 @@ using Dental_Clinic.Data;
 using Dental_Clinic.Interfaces;
 using Dental_Clinic.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Hangfire;
-using AspNetCoreHero.ToastNotification;
-using System.Configuration;
 using NToastNotify;
 
 namespace Dental_Clinic
@@ -15,18 +12,13 @@ namespace Dental_Clinic
         {
             var builder = WebApplication.CreateBuilder(args);
             var ConnStr = builder.Configuration.GetConnectionString("Default");
-            builder.Services.AddHangfire(configuration => configuration
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
-                .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings()
-                .UseSqlServerStorage(ConnStr));
-            builder.Services.AddHangfireServer();
             builder.Services.AddDbContext<AppDbContext>(o=>o.UseSqlServer(ConnStr));
             builder.Services.AddScoped<IPatientRepo, PatientRepo>();
             builder.Services.AddScoped<IAppointmentRepo, AppointmentRepo>();
             builder.Services.AddScoped<IInvoiceRepo, InvoiceRepo>();
             builder.Services.AddScoped<IMedicalHistoryRepo, MedicalHistoryRepo>();
             builder.Services.AddScoped<IDentalHistoryRepo, DentalHistoryRepo>();
+            builder.Services.AddScoped<IImageRepo, ImageRepo>();
             builder.Services.AddAutoMapper(typeof(Program));
 
             // Add services to the container.
@@ -56,7 +48,6 @@ namespace Dental_Clinic
 
             app.UseAuthorization();
             app.UseNToastNotify();
-            app.UseHangfireDashboard("/Dashboard");
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Patients}/{action=Index}/{id?}");

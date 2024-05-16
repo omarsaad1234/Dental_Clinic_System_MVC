@@ -55,10 +55,14 @@ namespace Dental_Clinic.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Up_Right = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Up_Left = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Down_Right = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Down_Left = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Up_Right_Details = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Up_Left_Details = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Down_Right_Details = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Down_Left_Details = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Up_Right_IsWorkingOn = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Up_Left_IsWorkingOn = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Down_Right_IsWorkingOn = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Down_Left_IsWorkingOn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PatId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -118,6 +122,28 @@ namespace Dental_Clinic.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Position = table.Column<int>(type: "int", nullable: false),
+                    Index = table.Column<int>(type: "int", nullable: false),
+                    DentalHistoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Images_DentalHistories_DentalHistoryId",
+                        column: x => x.DentalHistoryId,
+                        principalTable: "DentalHistories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_PatId",
                 table: "Appointments",
@@ -128,6 +154,11 @@ namespace Dental_Clinic.Migrations
                 table: "DentalHistories",
                 column: "PatId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Images_DentalHistoryId",
+                table: "Images",
+                column: "DentalHistoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoices_PatId",
@@ -155,13 +186,16 @@ namespace Dental_Clinic.Migrations
                 name: "Appointments");
 
             migrationBuilder.DropTable(
-                name: "DentalHistories");
+                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "Invoices");
 
             migrationBuilder.DropTable(
                 name: "MedicalHistories");
+
+            migrationBuilder.DropTable(
+                name: "DentalHistories");
 
             migrationBuilder.DropTable(
                 name: "Patients");

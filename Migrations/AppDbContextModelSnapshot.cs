@@ -54,19 +54,39 @@ namespace Dental_Clinic.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Down_Left")
+                    b.Property<string>("Down_Left_Details")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Down_Right")
+                    b.Property<string>("Down_Left_IsWorkingOn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Down_Right_Details")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Down_Right_IsWorkingOn")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PatId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Up_Left")
+                    b.Property<string>("Up_Left_Details")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Up_Right")
+                    b.Property<string>("Up_Left_IsWorkingOn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Up_Right_Details")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Up_Right_IsWorkingOn")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -75,6 +95,34 @@ namespace Dental_Clinic.Migrations
                         .IsUnique();
 
                     b.ToTable("DentalHistories");
+                });
+
+            modelBuilder.Entity("Dental_Clinic.Models.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DentalHistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Index")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DentalHistoryId");
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("Dental_Clinic.Models.Invoice", b =>
@@ -196,6 +244,17 @@ namespace Dental_Clinic.Migrations
                     b.Navigation("Patient");
                 });
 
+            modelBuilder.Entity("Dental_Clinic.Models.Image", b =>
+                {
+                    b.HasOne("Dental_Clinic.Models.DentalHistory", "DentalHistory")
+                        .WithMany("Images")
+                        .HasForeignKey("DentalHistoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DentalHistory");
+                });
+
             modelBuilder.Entity("Dental_Clinic.Models.Invoice", b =>
                 {
                     b.HasOne("Dental_Clinic.Models.Patient", "Patient")
@@ -216,6 +275,11 @@ namespace Dental_Clinic.Migrations
                         .IsRequired();
 
                     b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("Dental_Clinic.Models.DentalHistory", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("Dental_Clinic.Models.Patient", b =>

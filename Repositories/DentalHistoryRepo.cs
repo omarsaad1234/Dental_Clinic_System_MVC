@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dental_Clinic.Repositories
 {
-    public class DentalHistoryRepo:IDentalHistoryRepo
+    public class DentalHistoryRepo : IDentalHistoryRepo
     {
         private readonly AppDbContext _context;
 
@@ -58,6 +58,11 @@ namespace Dental_Clinic.Repositories
         public async Task<DentalHistory> GetByPatMobile(string mobile)
         {
             return await _context.DentalHistories.Include(d => d.Patient).Where(d => d.Patient.Mobile == mobile).FirstOrDefaultAsync();
+        }
+
+        public DentalHistory GetLast()
+        {
+            return _context.DentalHistories.OrderBy(d => d.Id).Last();
         }
     }
 }

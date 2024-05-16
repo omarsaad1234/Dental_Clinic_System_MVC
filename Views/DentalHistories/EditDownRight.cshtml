@@ -3,18 +3,42 @@
     ViewData["Title"] = "Edit";
     string teeth = ViewBag.teeth;
     int index = ViewBag.index;
+    List<string> images = ViewBag.TeethImgs;
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
 
 <h4>DentalHistory</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditDownRight" id="edit_2">
+        @foreach (var img in images)
+        {
+            <div class="item">
+                <a class="notify-badge" asp-action="DeleteImage" asp-route-fileName="@img" asp-route-id="@Model.Id" asp-route-index="@index" asp-route-actionName="EditDownRight">X</a>
+                <img src="~/uploads/@img" width="100" />
+            </div>
+        }
+        <form asp-action="EditDownRight" enctype="multipart/form-data" id="edit_2">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="Id" type="hidden" />
             <input name="index" id="index" value="@index" type="hidden" />
+            <div class="form-group">
+                <label for="Images" class="control-label">Images</label>
+                <input type="file" name="Images" id="Images" class="form-control" multiple />
+            </div>
+            <div class="form-group">
+                <label for="IsWorkingOn" class="control-label">Is Working On ?</label>
+                @if (Model.Down_Right_IsWorkingOn[index])
+                {
+                    <input type="checkbox" name="IsWorkingOn" id="IsWorkingOn" checked />
+                }
+                else
+                {
+                    <input type="checkbox" name="IsWorkingOn" id="IsWorkingOn" />
+
+                }
+            </div>
         </form>
         <div class="form-group">
             <label for="Detail" class="control-label">Detail</label>
@@ -23,6 +47,7 @@
         <div class="form-group">
             <input form="edit_2" type="submit" value="Save" class="btn btn-cust" />
         </div>
+        <a asp-action="Details" asp-route-id="@Model.Id">Back To Details</a>
     </div>
 </div>
 

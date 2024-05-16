@@ -27,11 +27,26 @@ a {
 a:hover{
     color:midnightblue;
 }
-img:hover {
+.TeethImage {
+    transition: transform 0.20s ease-in-out
+}
+.TeethImage:hover {
+    transform: scale(2);
+}
+.plain:hover {
     filter: saturate(300%);
 }
 .modified {
     filter: drop-shadow(3px 3px 6px green) invert(75%);
+}
+.modified:hover {
+    filter: drop-shadow(3px 3px 6px green) invert(65%);
+}
+.working {
+    filter: drop-shadow(3px 3px 6px green) invert(35%);
+}
+.working:hover {
+    filter: drop-shadow(3px 3px 6px green) invert(25%);
 }
 .btn-cust {
     color: #4169e1;
@@ -123,4 +138,21 @@ input[type="date"] {
     color:royalblue;
     border-color:cornflowerblue;
     
+}
+.item{
+    position:relative;
+    padding-top:20px;
+    display:inline-block;
+}
+.notify-badge {
+    position:absolute;
+    right:-20px;
+    top:10px;
+    background:white;
+    text-align:center;
+    border-radius:30px 30px 30px 30px;
+    color:black;
+    padding:5px 10px;
+    font-size:20px;
+    cursor:pointer;
 }

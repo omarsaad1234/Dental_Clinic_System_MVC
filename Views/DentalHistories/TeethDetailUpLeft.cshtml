@@ -1,7 +1,9 @@
-﻿@model Dental_Clinic.Models.DentalHistory
+﻿
+@model Dental_Clinic.Models.DentalHistory
 @{
     ViewData["Title"] = "Teeth Details";
-    var Teeth = ViewBag.Teeth;
+    var Teeth = ViewBag.TeethDetails;
+    List<string> TeethImages = ViewBag.TeethImgs;
     var index = ViewBag.index;
 }
 
@@ -11,6 +13,24 @@
     </dt>
     <dd class="col-sm-10">
         @Teeth
+    </dd>
+    <dt class="col-sm-2">
+        Photos
+    </dt>
+    <dd class="col-sm-10">
+        @if (TeethImages != null && TeethImages.Count != 0)
+        {
+
+            foreach(var img in TeethImages)
+            {
+
+                 <img src="~/uploads/@img" width="100" class="TeethImage" />
+            }
+        }
+        else
+        {
+            <p>There Is no Photos</p>
+        }
     </dd>
 </dl>
 <a asp-action="Details" asp-route-id="@Model.Id">Back To All</a>|

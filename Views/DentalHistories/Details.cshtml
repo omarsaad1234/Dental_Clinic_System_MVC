@@ -22,26 +22,40 @@
                 <td>
                 @for (int i = 7; i >= 0; i--)
                 {
-                    if(Model.Up_Left[i] != null)
+                    if(Model.Up_Left_Details[i] != null)
                     {
-                        <a asp-action="TeethDetailUpLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img class="modified" src="~/Up_@(i).png" /></a>
+                        if (Model.Up_Left_IsWorkingOn[i])
+                        {
+                            <a asp-action="TeethDetailUpLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img class="working" src="~/Up_@(i).png" data-toggle="tooltip" data-placement="top" title="@Model.Up_Left_Details[i]" /></a>
+                        }
+                        else
+                        {
+                            <a asp-action="TeethDetailUpLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img class="modified" src="~/Up_@(i).png" data-toggle="tooltip" data-placement="top" title="@Model.Up_Left_Details[i]" /></a>
+                        }
                     }
                     else
                     {
-                        <a asp-action="TeethDetailUpLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img src="~/Up_@(i).png" /></a>
+                        <a asp-action="TeethDetailUpLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img class="plain" src="~/Up_@(i).png" /></a>
                     }
                     
                    
                 }
                 @for (int i = 0; i < 8; i++)
                 {
-                    if (Model.Up_Right[i] != null)
+                    if (Model.Up_Right_Details[i] != null)
                     {
-                        <a asp-action="TeethDetailUpRight" asp-route-id="@Model.Id" asp-route-num="@i"><img class="modified" src="~/Up_@(i).png" /></a>
+                        if (Model.Down_Right_IsWorkingOn[i])
+                        {
+                            <a asp-action="TeethDetailUpRight" asp-route-id="@Model.Id" asp-route-num="@i"><img class="working" src="~/Up_@(i).png" data-toggle="tooltip" data-placement="top" title="@Model.Up_Right_Details[i]" /></a>
+                        }
+                        else
+                        {
+                            <a asp-action="TeethDetailUpRight" asp-route-id="@Model.Id" asp-route-num="@i"><img class="modified" src="~/Up_@(i).png" data-toggle="tooltip" data-placement="top" title="@Model.Up_Right_Details[i]" /></a>
+                        }
                     }
                     else
                     {
-                        <a asp-action="TeethDetailUpRight" asp-route-id="@Model.Id" asp-route-num="@i"><img src="~/Up_@(i).png" /></a>
+                        <a asp-action="TeethDetailUpRight" asp-route-id="@Model.Id" asp-route-num="@i"><img class="plain" src="~/Up_@(i).png" /></a>
                     }
                 }
                 </td>
@@ -51,25 +65,39 @@
                 @for (int i = 7; i >= 0; i--)
                 {
 
-                    if (Model.Down_Left[i] != null)
+                    if (Model.Down_Left_Details[i] != null)
                     {
-                        <a asp-action="TeethDetailDownLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img class="modified" src="~/Down_@(i).png" /></a>
+                        if (Model.Down_Left_IsWorkingOn[i])
+                        {
+                            <a asp-action="TeethDetailDownLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img class="working" src="~/Down_@(i).png" data-toggle="tooltip" data-placement="top" title="@Model.Down_Left_Details[i]" /></a>
+                        }
+                        else
+                        {
+                            <a asp-action="TeethDetailDownLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img class="modified" src="~/Down_@(i).png" data-toggle="tooltip" data-placement="top" title="@Model.Down_Left_Details[i]" /></a>
+                        }
                     }
                     else
                     {
-                        <a asp-action="TeethDetailDownLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img src="~/Down_@(i).png" /></a>
+                        <a asp-action="TeethDetailDownLeft" asp-route-id="@Model.Id" asp-route-num="@i"><img class="plain" src="~/Down_@(i).png" /></a>
                     }
 
                 }
                 @for (int i = 0; i < 8; i++)
                 {
-                    if (Model.Down_Right[i] != null)
+                    if (Model.Down_Right_Details[i] != null)
                     {
-                        <a asp-action="TeethDetailDownRight" asp-route-id="@Model.Id" asp-route-num="@i"><img class="modified" src="~/Down_@(i).png" /></a>
+                        if(Model.Down_Right_IsWorkingOn[i])
+                        {
+                            <a asp-action="TeethDetailDownRight" asp-route-id="@Model.Id" asp-route-num="@i"><img class="working" src="~/Down_@(i).png" data-toggle="tooltip" data-placement="top" title="@Model.Down_Right_Details[i]" /></a>
+                        }
+                        else
+                        {
+                            <a asp-action="TeethDetailDownRight" asp-route-id="@Model.Id" asp-route-num="@i"><img class="modified" src="~/Down_@(i).png" data-toggle="tooltip" data-placement="top" title="@Model.Down_Right_Details[i]" /></a>
+                        }
                     }
                     else
                     {
-                        <a asp-action="TeethDetailDownRight" asp-route-id="@Model.Id" asp-route-num="@i"><img src="~/Down_@(i).png" /></a>
+                        <a asp-action="TeethDetailDownRight" asp-route-id="@Model.Id" asp-route-num="@i"><img class="plain" src="~/Down_@(i).png" /></a>
                     }
                 }
             </td>

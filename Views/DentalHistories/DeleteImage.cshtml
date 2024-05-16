@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "Delete";
+    string img = ViewBag.fileName;
+    int id = ViewBag.id;
+    int index = ViewBag.index;
+    string action = ViewBag.action;
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this Photo?</h3>
+<div>
+    <hr />
+    <img src="~/uploads/@img" width="100"/>
+
+    <form asp-action="DeleteImagePost">
+        <input type="hidden" name="fileName" id="fileName" value="@img" />
+        <input type="hidden" name="id" id="id" value="@id" />
+        <input type="hidden" name="index" id="index" value="@index" />
+        <input type="hidden" name="action" id="action" value="@action" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="@action" asp-route-id="@id" asp-route-index="@index">Back to Edit</a> 
+    </form>
+</div>

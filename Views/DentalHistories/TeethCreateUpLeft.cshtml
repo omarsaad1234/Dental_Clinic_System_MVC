@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Create";
-    int index = ViewBag.index;
-    int PatientId = ViewBag.patId;
+    int index =(int) ViewBag.index;
+    int PatientId = (int) ViewBag.patId;
 }
 
 <h1>Create</h1>
@@ -10,10 +10,20 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateUpLeft" id="create_3">
+        <form asp-action="CreateUpLeft" enctype="multipart/form-data" id="create_3">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" name="Index" id="Index" value="@index"/>
             <input type="hidden" name="PatientId" id="PatientId" value="@PatientId" />
+            
+            <div class="form-group">
+                <label for="Images" class="control-label">Images</label>
+                <input type="file" name="Images" id="Images" class="form-control" multiple/>
+            </div>
+            <div class="form-group">
+                <label for="IsWorkingOn" class="control-label">Is Working On ?</label>
+                <input type="checkbox" name="IsWorkingOn" id="IsWorkingOn"/>
+            </div>
+            
         </form>
         <div class="form-group">
             <label for="Detail" class="control-label">Detail</label>

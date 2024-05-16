@@ -15,7 +15,7 @@ namespace Dental_Clinic.Data
         public DbSet<Appointment> Appointments {  get; set; }
         public DbSet<MedicalHistory> MedicalHistories {  get; set; }
         public DbSet<DentalHistory> DentalHistories {  get; set; }
-
+        public DbSet<Image> Images { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Patient>().HasIndex(p => p.Mobile).IsUnique();

@@ -15,7 +15,7 @@
                 @for (int i = 7; i >= 0; i--)
                 {
 
-                        <a asp-action="TeethCreateUpLeft" asp-route-id="@id" asp-route-num="@i"><img src="~/Up_@(i).png" /></a>
+                    <a asp-action="TeethCreateUpLeft" asp-route-id="@id" asp-route-num="@i"><img class="plain" src="~/Up_@(i).png" /></a>
                    
 
 
@@ -23,7 +23,7 @@
                 @for (int i = 0; i < 8; i++)
                 {
 
-                    <a asp-action="TeethCreateUpRight" asp-route-id="@id" asp-route-num="@i"><img src="~/Up_@(i).png" /></a>
+                    <a asp-action="TeethCreateUpRight" asp-route-id="@id" asp-route-num="@i"><img class="plain" src="~/Up_@(i).png" /></a>
                     
                 }
             </td>
@@ -33,14 +33,14 @@
                 @for (int i = 7; i >= 0; i--)
                 {
 
-                    <a asp-action="TeethCreateDownLeft" asp-route-id="@id" asp-route-num="@i"><img src="~/Down_@(i).png" /></a>
+                    <a asp-action="TeethCreateDownLeft" asp-route-id="@id" asp-route-num="@i"><img class="plain" src="~/Down_@(i).png" /></a>
                     
 
                 }
                 @for (int i = 0; i < 8; i++)
                 {
 
-                    <a asp-action="TeethCreateDownRight" asp-route-id="@id" asp-route-num="@i"><img src="~/Down_@(i).png" /></a>
+                    <a asp-action="TeethCreateDownRight" asp-route-id="@id" asp-route-num="@i"><img class="plain" src="~/Down_@(i).png" /></a>
                     
                 }
             </td>
