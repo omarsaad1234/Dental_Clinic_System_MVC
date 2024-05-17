@@ -27,11 +27,25 @@ a {
 a:hover{
     color:midnightblue;
 }
+.photo{
+    display:flex;
+    justify-content:center;
+
+}
+.zoomedPhoto {
+    transition: transform 0.20s ease-in-out
+}
+.zoomedPhoto:hover{
+    transform:scale(1.2);
+}
+
 .TeethImage {
+    margin-top:20px;
+    margin-right:30px;
     transition: transform 0.20s ease-in-out
 }
 .TeethImage:hover {
-    transform: scale(2);
+    transform: scale(1.2);
 }
 .plain:hover {
     filter: saturate(300%);

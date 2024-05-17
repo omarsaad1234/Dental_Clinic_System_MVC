@@ -618,5 +618,10 @@ namespace Dental_Clinic.Controllers
             System.IO.File.Delete(filePath);
             return RedirectToAction(action, new {id=id,index=index});
         }
+        public IActionResult ViewPhoto(string src)
+        {
+            ViewBag.src = src;
+            return View("PhotoView");
+        }
     }
 }

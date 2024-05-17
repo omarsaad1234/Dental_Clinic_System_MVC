@@ -24,7 +24,7 @@
             foreach(var img in TeethImages)
             {
 
-                 <img src="~/uploads/@img" width="100" class="TeethImage" />
+                <a asp-action="ViewPhoto" asp-route-src="@img"><img src="~/uploads/@img" width="100" class="TeethImage" /></a>
             }
         }
         else
