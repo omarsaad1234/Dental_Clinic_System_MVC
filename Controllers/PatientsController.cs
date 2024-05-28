@@ -147,7 +147,7 @@ namespace Dental_Clinic.Controllers
 
                         return View(patient);
                     }
-                    _toastNotification.AddSuccessToastMessage("Created Successfully");
+                    _toastNotification.AddSuccessToastMessage("Edited Successfully");
 
                     return RedirectToAction(nameof(Index));
                 }
@@ -195,7 +195,7 @@ namespace Dental_Clinic.Controllers
                 return View(patient);
 
             }
-            _toastNotification.AddSuccessToastMessage("Created Successfully");
+            _toastNotification.AddSuccessToastMessage("Deleted Successfully");
             return RedirectToAction(nameof(Index));
         }
 

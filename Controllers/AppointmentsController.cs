@@ -97,7 +97,7 @@ namespace Dental_Clinic.Controllers
                     _toastNotification.AddErrorToastMessage("Something Went Wrong While Saving");
                     return View();
                 }
-                _toastNotification.AddSuccessToastMessage("Added Successfully");
+                _toastNotification.AddSuccessToastMessage("Created Successfully");
                 return RedirectToAction(nameof(Index));
             }
             var patients = await _patientRepo.GetAll();

@@ -145,7 +145,7 @@ namespace Dental_Clinic.Controllers
                         return View(medicalHistoryEdit);
                     }
                         
-                    _toastNotification.AddSuccessToastMessage("Created Successfully");
+                    _toastNotification.AddSuccessToastMessage("Edited Successfully");
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception)
@@ -189,7 +189,7 @@ namespace Dental_Clinic.Controllers
             if (medicalHistory != null)
                 _medicalHistoryRepo.Delete(medicalHistory);
 
-            _toastNotification.AddSuccessToastMessage("Created Successfully");
+            _toastNotification.AddSuccessToastMessage("Deleted Successfully");
             return RedirectToAction(nameof(Index));
         }
 
