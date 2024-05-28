@@ -44,7 +44,7 @@
                 {
                     if (Model.Up_Right_Details[i] != null)
                     {
-                        if (Model.Down_Right_IsWorkingOn[i])
+                        if (Model.Up_Right_IsWorkingOn[i])
                         {
                             <a asp-action="TeethDetailUpRight" asp-route-id="@Model.Id" asp-route-num="@i"><img class="working" src="~/Up_@(i).png" data-toggle="tooltip" data-placement="top" title="@Model.Up_Right_Details[i]" /></a>
                         }

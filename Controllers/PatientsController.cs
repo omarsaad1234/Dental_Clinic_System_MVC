@@ -11,6 +11,7 @@ using Dental_Clinic.Interfaces;
 using Dental_Clinic.Dtos.CreateAndEditRequests;
 using AutoMapper;
 using NToastNotify;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Dental_Clinic.Controllers
 {
@@ -21,23 +22,29 @@ namespace Dental_Clinic.Controllers
         private readonly IInvoiceRepo _invoiceRepo;
         private readonly IMedicalHistoryRepo _medicalHistory;
         private readonly IDentalHistoryRepo _dentalHistoryRepo;
+        private readonly IImageRepo _imageRepo;
         private readonly IMapper _mapper;
         private readonly IToastNotification _toastNotification;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
         public PatientsController(IPatientRepo patientRepo,IAppointmentRepo appointmentRepo
             ,IInvoiceRepo invoiceRepo
             ,IMedicalHistoryRepo medicalHistory
             ,IDentalHistoryRepo dentalHistoryRepo
+            ,IImageRepo imageRepo
             ,IMapper mapper
-            ,IToastNotification toastNotification)
+            ,IToastNotification toastNotification
+            ,IWebHostEnvironment webHostEnvironment)
         {
             _patientRepo = patientRepo;
             _appointmentRepo = appointmentRepo;
             _invoiceRepo = invoiceRepo;
             _medicalHistory = medicalHistory;
             _dentalHistoryRepo = dentalHistoryRepo;
+            _imageRepo = imageRepo;
             _mapper = mapper;
             _toastNotification = toastNotification;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Patients

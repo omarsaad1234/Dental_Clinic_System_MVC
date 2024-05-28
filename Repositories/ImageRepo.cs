@@ -56,5 +56,12 @@ namespace Dental_Clinic.Repositories
         {
             return await _context.Images.Where(i => i.Url == fileName).FirstOrDefaultAsync();
         }
+
+        public void DeleteRange(List<Image> images)
+        {
+            _context.Images.RemoveRange(images);
+            _context.SaveChanges();
+        }
+
     }
 }

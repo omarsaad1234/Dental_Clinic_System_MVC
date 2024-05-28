@@ -12,5 +12,6 @@ namespace Dental_Clinic.Interfaces
         public void CreateRange(List<Image> images);
         public void Update(Image image);
         public void Delete(Image image);
+        public void DeleteRange(List<Image> images);
     }
 }

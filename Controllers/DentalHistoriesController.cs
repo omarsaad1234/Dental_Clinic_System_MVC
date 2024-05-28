@@ -228,6 +228,7 @@ namespace Dental_Clinic.Controllers
                         Position = Position.Up_Right,
                         DentalHistory = dentalHistory,
                         Url = UploadFile(Image)
+
                     });
                 }
                 _imageRepo.CreateRange(images);
@@ -353,7 +354,7 @@ namespace Dental_Clinic.Controllers
             ViewBag.index = index;
             var images = await _imageRepo.GetByDentalHistId(id);
             ViewBag.TeethImgs = images
-                .Where(i => i.Position == Position.Up_Left && i.Index == index)
+                .Where(i => i.Position == Position.Down_Right && i.Index == index)
                 .Select(i => i.Url)
                 .ToList();
             return View(dentalhistory);
@@ -367,7 +368,7 @@ namespace Dental_Clinic.Controllers
             ViewBag.index = index;
             var images = await _imageRepo.GetByDentalHistId(id);
             ViewBag.TeethImgs = images
-                .Where(i => i.Position == Position.Up_Left && i.Index == index)
+                .Where(i => i.Position == Position.Down_Left && i.Index == index)
                 .Select(i => i.Url)
                 .ToList();
             return View(dentalhistory);
@@ -564,10 +565,18 @@ namespace Dental_Clinic.Controllers
             try
             {
                 var dentalhistory = await _dentalHistoryRepo.GetById(id);
+                var Images =await _imageRepo.GetByDentalHistId(id);
+                
                 if (!_dentalHistoryRepo.Delete(dentalhistory))
                 {
                     _toastNotification.AddErrorToastMessage("Something Went Wrong");
                     return View();
+                }
+                string uploadDir = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+                foreach (var file in Images.Select(i => i.Url))
+                {                
+                    string filePath = Path.Combine(uploadDir, file);
+                    System.IO.File.Delete(filePath);
                 }
                     
                 _toastNotification.AddSuccessToastMessage("Deleted Successfully");
