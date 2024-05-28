@@ -88,10 +88,19 @@ namespace Dental_Clinic.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AppointmentDtoRequest appointmentCreate)
         {
+            var patients = await _patientRepo.GetAll();
+            SelectList patientsList = new SelectList(patients, "Id", "Name", appointmentCreate.PatId);
+            ViewBag.Patients = patientsList;
             if (ModelState.IsValid&&_patientRepo.PatientExists(appointmentCreate.PatId))
             {
                 var patient = await _patientRepo.GetById(appointmentCreate.PatId);
                 var appointmentMap = _mapper.Map<Appointment>(appointmentCreate);
+                var date = appointmentCreate.Date.ToDateTime(new TimeOnly());
+                if (date.Date<DateTime.Now.Date)
+                {
+                    _toastNotification.AddErrorToastMessage("Date Can't Be In The Past");
+                    return View();
+                }
                 if (!_appointmentRepo.Create(appointmentMap))
                 {
                     _toastNotification.AddErrorToastMessage("Something Went Wrong While Saving");
@@ -100,9 +109,6 @@ namespace Dental_Clinic.Controllers
                 _toastNotification.AddSuccessToastMessage("Created Successfully");
                 return RedirectToAction(nameof(Index));
             }
-            var patients = await _patientRepo.GetAll();
-            SelectList patientsList = new SelectList(patients, "Id", "Name", appointmentCreate.PatId);
-            ViewBag.Patients = patientsList;
             _toastNotification.AddErrorToastMessage("Something Went Wrong");
             return View(appointmentCreate);
         }
@@ -141,12 +147,20 @@ namespace Dental_Clinic.Controllers
             if (!_appointmentRepo.AppointmentExists(id))
                 return NotFound();
 
-
+            var patients = await _patientRepo.GetAll();
+            SelectList patientsList = new SelectList(patients, "Id", "Name");
+            ViewBag.Patients = patientsList;
             if (ModelState.IsValid)
             {
                 try
                 {
                     var appointmentMap = _mapper.Map<Appointment>(appointmentUpdate);
+                    var date = appointmentUpdate.Date.ToDateTime(new TimeOnly());
+                    if (date.Date < DateTime.Now.Date)
+                    {
+                        _toastNotification.AddErrorToastMessage("Date Can't Be In The Past");
+                        return View();
+                    }
                     if (!_appointmentRepo.Update(appointmentMap))
                     {
                         _toastNotification.AddErrorToastMessage("Something Went Wrong");
@@ -162,9 +176,7 @@ namespace Dental_Clinic.Controllers
                 _toastNotification.AddSuccessToastMessage("Edited Successfully");
                 return RedirectToAction(nameof(Index));
             }
-            var patients = await _patientRepo.GetAll();
-            SelectList patientsList = new SelectList(patients, "Id", "Name");
-            ViewBag.Patients = patientsList;
+            
             _toastNotification.AddErrorToastMessage("Something Went Wrong");
             return View(appointmentUpdate);
         }
