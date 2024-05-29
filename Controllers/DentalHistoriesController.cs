@@ -3,6 +3,7 @@ using Dental_Clinic.Data;
 using Dental_Clinic.Dtos.GetResponse;
 using Dental_Clinic.Interfaces;
 using Dental_Clinic.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
@@ -12,6 +13,7 @@ using WebGrease.Activities;
 
 namespace Dental_Clinic.Controllers
 {
+    [Authorize]
     public class DentalHistoriesController : Controller
     {
         private readonly IDentalHistoryRepo _dentalHistoryRepo;

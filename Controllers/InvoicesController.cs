@@ -11,9 +11,11 @@ using Dental_Clinic.Interfaces;
 using Dental_Clinic.Dtos.CreateAndEditRequests;
 using AutoMapper;
 using NToastNotify;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Dental_Clinic.Controllers
 {
+    [Authorize]
     public class InvoicesController : Controller
     {
         private readonly IInvoiceRepo _invoiceRepo;

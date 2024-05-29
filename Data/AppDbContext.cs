@@ -2,10 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Dental_Clinic.Dtos.CreateAndEditRequests;
 using Dental_Clinic.Dtos.GetResponse;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Dental_Clinic.Data
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext: IdentityDbContext<User>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options):base(options)
         {
@@ -18,7 +19,9 @@ namespace Dental_Clinic.Data
         public DbSet<Image> Images { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             modelBuilder.Entity<Patient>().HasIndex(p => p.Mobile).IsUnique();
+            base.OnModelCreating(modelBuilder);
         }
 
     }

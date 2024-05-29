@@ -12,9 +12,11 @@ using Dental_Clinic.Dtos.CreateAndEditRequests;
 using AutoMapper;
 using NToastNotify;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Dental_Clinic.Controllers
 {
+    [Authorize]
     public class PatientsController : Controller
     {
         private readonly IPatientRepo _patientRepo;

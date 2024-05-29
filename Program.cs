@@ -3,7 +3,8 @@ using Dental_Clinic.Interfaces;
 using Dental_Clinic.Repositories;
 using Microsoft.EntityFrameworkCore;
 using NToastNotify;
-
+using Microsoft.AspNetCore.Identity;
+using Dental_Clinic.Models;
 namespace Dental_Clinic
 {
     public class Program
@@ -13,6 +14,8 @@ namespace Dental_Clinic
             var builder = WebApplication.CreateBuilder(args);
             var ConnStr = builder.Configuration.GetConnectionString("Default");
             builder.Services.AddDbContext<AppDbContext>(o=>o.UseSqlServer(ConnStr));
+            builder.Services.AddRazorPages();
+            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AppDbContext>();
             builder.Services.AddScoped<IPatientRepo, PatientRepo>();
             builder.Services.AddScoped<IAppointmentRepo, AppointmentRepo>();
             builder.Services.AddScoped<IInvoiceRepo, InvoiceRepo>();
@@ -45,12 +48,13 @@ namespace Dental_Clinic
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseNToastNotify();
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Patients}/{action=Index}/{id?}");
+            app.MapRazorPages();
 
             app.Run();
         }

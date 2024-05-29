@@ -13,9 +13,11 @@ using AutoMapper;
 using Hangfire;
 using NToastNotify;
 using Microsoft.Ajax.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Dental_Clinic.Controllers
 {
+    [Authorize]
     public class AppointmentsController : Controller
     {
         private readonly IAppointmentRepo _appointmentRepo;
